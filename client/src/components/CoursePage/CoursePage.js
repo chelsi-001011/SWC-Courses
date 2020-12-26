@@ -6,10 +6,11 @@ import { Link } from "react-router-dom";
 import styles from "./CoursePage.module.css";
 import CourseCard from "./CourseCard/CourseCard";
 import axios from "axios";
+import CourseCardContainer from "./CourseCard/CourseCardContainer";
 
 class CoursePage extends Component {
   state = {
-    showEnrolledCourses: null,
+    EnrolledCourses: [],
     showAllCourses: null,
     sarchResult: null,
     courseList: [],
@@ -29,7 +30,8 @@ class CoursePage extends Component {
       axios
         .get("/user")
         .then((res) => {
-          this.setState({ name: res.data.name });
+          console.log(res.data);
+          this.setState({ name: res.data.name, EnrolledCourses: res.data.enrolled_courses });
         })
         .catch((err) => console.log(err));
     };
@@ -41,8 +43,8 @@ class CoursePage extends Component {
     return (
       <div className={styles.Body}>
         <AppNavbar name={this.state.name} />
-        <Container>
-          <form
+        {/* <Container>
+           <form
             className={styles.SearchForm}
             action="/courses/search"
             method="get"
@@ -55,20 +57,24 @@ class CoursePage extends Component {
                 placeholder="find courses"
               />
             </div>
-          </form>
-        </Container>
+          </form> 
+        </Container> */}
 
         <Container className={classNames(styles.Container, "py-5")}>
           <Container className="d-flex" style={{ textAlign: "center" }}>
             <h2 className={styles.Heading}>Enrolled Courses</h2>
             <br />
           </Container>
-          <Container
+          {/* <Container
             className="d-flex"
             style={{ flexWrap: "wrap", justifyContent: "center" }}
           >
-            <CourseCard />
-          </Container>
+             <CourseCardContainer enrolled_courses = {this.state.EnrolledCourses} /> 
+            <CourseCard /><CourseCard/>
+          </Container> */}
+      <CourseCardContainer className="d-flex"
+         style={{ flexWrap: "wrap", justifyContent: "center" }}
+             enrolled_courses = {this.state.EnrolledCourses} />
         </Container>
       </div>
     );

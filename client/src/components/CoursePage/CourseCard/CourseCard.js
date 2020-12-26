@@ -6,7 +6,7 @@ import classNames from "classnames";
 
 const CourseCard = (props) => {
   return (
-    <Link to="/courses/123" style={{ textDecoration: "none" }}>
+    <Link to={`/courses/${props.id}`} style={{ textDecoration: "none" }}>
       <Card className={classNames(styles.CourseCard, "border-light")}>
         <CardImg
           top
@@ -16,10 +16,10 @@ const CourseCard = (props) => {
         />
         <CardBody>
           <CardTitle>
-            <h5>props.title</h5>
+            <h5>{props.title}</h5>
           </CardTitle>
           <CardText>
-            <p>props.description</p>
+            <p>{props.description}</p>
           </CardText>
         </CardBody>
       </Card>
