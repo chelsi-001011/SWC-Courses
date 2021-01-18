@@ -6,10 +6,6 @@ const passport = require("passport");
 const User = require("../models/user");
 const CLIENT_HOME_PAGE_URL = "http://localhost:3000/";
 
-router.get("/", (req, res) => {
-  res.send("<h1>WELCOME TO SWC-COURSES</h1>");
-});
-
 ////// USE THE BELOW ROUTES FOR JWT-TOKEN AUTH
 
 // router.post("/register", authController.register);

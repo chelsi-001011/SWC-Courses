@@ -94,6 +94,7 @@ app.use((err, req, res, next) => {
 
 //Setup routes
 // Serve static assets if in production
+console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === "production") {
   //set static folder
   console.log("i'm running");
