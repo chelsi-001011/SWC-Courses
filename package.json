@@ -4,7 +4,9 @@
   "description": "Backend API of SWC-Courses",
   "main": "app.js",
   "scripts": {
-    "server": "nodemon app.js"
+    "server": "nodemon app.js",
+    "start": "set NODE_ENV=production&& node app.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "",
   "license": "MIT",
