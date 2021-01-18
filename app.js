@@ -7,6 +7,8 @@ const cookieParser = require("cookie-parser");
 const PORT = process.env.PORT || 5000;
 //const url = "mongodb://localhost/SWC_Media_BS";
 //const config = require("config");
+const dotenv = require("dotenv");
+dotenv.config({ path: "./config.env" });
 const url = process.env.MONGO_URL;
 const session = require("express-session");
 const cookieSession = require("cookie-session");

@@ -1,4 +1,3 @@
-const config = require("config");
 const jwt = require("jsonwebtoken");
 
 ///////////////// AUTH MIDDLEWARES
@@ -11,7 +10,7 @@ function authenticate(req, res, next) {
     return res.status(401).json({ msg: "No token, authorization denied" });
 
   try {
-    const decoded = jwt.verify(token, config.get("jwtSecret"));
+    const decoded = jwt.verify(token, process.ennv.jwtSecret);
     req.user = decoded;
     next();
   } catch (error) {
