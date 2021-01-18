@@ -2,7 +2,7 @@ const passport = require("passport");
 const OutlookStrategy = require("passport-outlook").Strategy;
 const express = require("express");
 const User = require("../models/user");
-const config = require("config");
+//const config = require("config");
 const OUTLOOK_CLIENT_ID = process.env.OUTLOOK_CLIENT_ID;
 const OUTLOOK_CLIENT_SECRET = process.env.OUTLOOK_CLIENT_SECRET;
 
