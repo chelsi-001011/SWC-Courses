@@ -30,7 +30,10 @@ export default function Sidemenu() {
   const [state, setState] = React.useState({ left: false });
 
   const logoutHandler = () => {
-    window.open("http://localhost:5000/auth/logout", "_self");
+    window.open(
+      "https://happy-learning-react.herokuapp.com/auth/logout",
+      "_self"
+    );
   };
 
   const toggleDrawer = (anchor, open) => (event) => {

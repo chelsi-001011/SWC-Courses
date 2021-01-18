@@ -63,7 +63,7 @@ class AdminCourseDetail extends Component {
         });
     };
     apiCall();
-    window.open("http://localhost:3000/api/admin/courses");
+    window.open("https://happy-learning-react.herokuapp.com/api/admin/courses");
   };
   handleSubmit = (e) => {
     e.preventDefault();
