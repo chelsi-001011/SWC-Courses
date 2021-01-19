@@ -156,6 +156,7 @@ exports.deleteOneCourse = async (req, res) => {
 };
 
 exports.uploadVideo = (req, res) => {
+  res.setHeader("Content-Type", "application/json");
   upload(req, res, async (err) => {
     const sizes = [
       [240, 350],
@@ -324,9 +325,7 @@ exports.uploadVideo = (req, res) => {
         folder: targetdir,
       })
       .on("end", function () {
-        res.write("Screenshots taken", "utf8", () => {
-          console.log("Screenshots taken");
-        });
+        console.log("Screenshots taken");
       })
       .on("error", function (err) {
         console.error(err);
