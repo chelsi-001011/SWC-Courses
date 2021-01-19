@@ -163,7 +163,9 @@ exports.uploadVideo = (req, res) => {
       [720, 2500],
     ];
 
-    console.log(req.files.video[0].originalname);
+    res.write(req.files.video[0].originalname, "utf8", () => {
+      console.log(req.files.video[0].originalname);
+    });
 
     let fileName =
       req.files.video[0].originalname.split(".").slice(0, -1).join(".") +
@@ -179,11 +181,17 @@ exports.uploadVideo = (req, res) => {
       "/assets/videos/",
       req.files.video[0].originalname
     );
+    res.write(
+      `source: ${sourcefn}\ntarget: ${targetdir}\nname: ${name}\nfn: ${fn}`,
+      "utf8",
+      () => {
+        console.log("source:", sourcefn);
+        console.log("target:", targetdir);
+        console.log("name:", name);
+        console.log("fn:", fn);
+      }
+    );
 
-    console.log("source:", sourcefn);
-    console.log("target:", targetdir);
-    console.log("name:", name);
-    console.log("fn:", fn);
     // try {
     //   const targetdirInfo = fs.statSync(targetdir);
     // } catch (err) {
@@ -196,7 +204,9 @@ exports.uploadVideo = (req, res) => {
 
     try {
       let targetdirInfo = await checkDirectoryPro(targetdir);
-      console.log(encoddirmsg);
+      res.write(encoddirmsg, "utf8", () => {
+        console.log(encoddirmsg);
+      });
     } catch (err) {
       console.log(err);
     }
@@ -240,12 +250,23 @@ exports.uploadVideo = (req, res) => {
     }
 
     proc.on("start", function (commandLine) {
-      console.log("progress", "Spawned Ffmpeg with command: " + commandLine);
+      res.write(
+        `Progress Spawned Ffmpeg with command: ${commandLine}`,
+        "utf8",
+        () => {
+          console.log(
+            "progress",
+            "Spawned Ffmpeg with command: " + commandLine
+          );
+        }
+      );
     });
 
     proc
       .on("progress", function (info) {
-        console.log("progress", info);
+        res.write(`Progress: ${info}`, "utf8", () => {
+          console.log("progress", info);
+        });
       })
       .on("end", function () {
         getVideoDurationInSeconds(sourcefn).then((duration) => {
@@ -303,7 +324,9 @@ exports.uploadVideo = (req, res) => {
         folder: targetdir,
       })
       .on("end", function () {
-        console.log("Screenshots taken");
+        res.write("Screenshots taken", "utf8", () => {
+          console.log("Screenshots taken");
+        });
       })
       .on("error", function (err) {
         console.error(err);
