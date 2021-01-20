@@ -156,11 +156,10 @@ exports.deleteOneCourse = async (req, res) => {
 };
 
 exports.uploadVideo = (req, res) => {
-  res
-    .status(200)
-    .json(
-      "Video is uploaded on server and is under processing check logs for more details"
-    );
+  res.status(200).json({
+    msg:
+      "Video is uploaded on server and is under processing check logs for more details",
+  });
   upload(req, res, async (err) => {
     const sizes = [
       [240, 350],
