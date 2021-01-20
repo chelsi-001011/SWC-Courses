@@ -156,6 +156,11 @@ exports.deleteOneCourse = async (req, res) => {
 };
 
 exports.uploadVideo = (req, res) => {
+  res
+    .status(200)
+    .json(
+      "Video is uploaded on server and is under processing check logs for more details"
+    );
   upload(req, res, async (err) => {
     const sizes = [
       [240, 350],
@@ -311,11 +316,6 @@ exports.uploadVideo = (req, res) => {
 
     imageProc.run();
   });
-  res
-    .status(200)
-    .json(
-      "Video is uploaded on server and is under processing check logs for more details"
-    );
 };
 
 const createDirectoryPro = (directory) => {
