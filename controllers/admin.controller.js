@@ -280,7 +280,7 @@ exports.uploadVideo = (req, res) => {
                   }
                 );
 
-                return res.status(200).json(newlyCreated);
+                return console.log("Newly created media -\n", newlyCreated);
               }
             });
           });
@@ -311,6 +311,11 @@ exports.uploadVideo = (req, res) => {
 
     imageProc.run();
   });
+  res
+    .status(200)
+    .json(
+      "Video is uploaded on server and is under processing check logs for more details"
+    );
 };
 
 const createDirectoryPro = (directory) => {
