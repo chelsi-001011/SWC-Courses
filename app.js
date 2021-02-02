@@ -5,7 +5,7 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 //const url = "mongodb://localhost/SWC_Media_BS";
 //const config = require("config");
 const dotenv = require("dotenv");
@@ -37,8 +37,8 @@ mongoose
   .catch((err) => console.error("DB connection fail"));
 
 var corsOptions = {
-  origin: "http://happy-learning-react.herokuapp.com",
-  // origin: "*",
+  origin: "http://beta.courses.swciitg.in",
+  //origin: "*",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };

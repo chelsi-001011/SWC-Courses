@@ -7,10 +7,7 @@ const OutlookLogin = (props) => {
   const { isLoggedIn, setisLoggedIn } = useContext(AuthContext);
 
   const onSubmit = (e) => {
-    window.open(
-      "https://happy-learning-react.herokuapp.com/auth/outlook",
-      "_self"
-    );
+    window.open("http://beta.courses.swciitg.in/auth/outlook", "_self");
   };
 
   return (

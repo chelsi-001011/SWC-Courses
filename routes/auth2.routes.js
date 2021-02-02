@@ -4,7 +4,7 @@ const authController = require("../controllers/auth2.controller");
 const { authenticate, isLoggedIn } = require("../middleware/index");
 const passport = require("passport");
 const User = require("../models/user");
-const CLIENT_HOME_PAGE_URL = "https://happy-learning-react.herokuapp.com/";
+const CLIENT_HOME_PAGE_URL = "http://beta.courses.swciitg.in";
 
 ////// USE THE BELOW ROUTES FOR JWT-TOKEN AUTH
 

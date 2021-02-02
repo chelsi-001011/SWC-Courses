@@ -8,10 +8,7 @@ import Avatar from "@material-ui/core/Avatar";
 
 class AppNavbar extends Component {
   logoutHandler = () => {
-    window.open(
-      "https://happy-learning-react.herokuapp.com/auth/logout",
-      "_self"
-    );
+    window.open("http://beta.courses.swciitg.in/auth/logout", "_self");
   };
 
   submitHandler = (e) => {

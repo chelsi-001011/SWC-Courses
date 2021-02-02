@@ -1,6 +1,6 @@
 # Schema Structure
 
-### Course
+## Course
 
 - Title
 - Topics (array) [ref to a topic schema?]
@@ -30,15 +30,13 @@
         - timestamp
         - text {...}  
 
-# Tentative Routes  
+### Tentative Routes  
 
 - /users
-	- /all
-	- /:id
+ -- /all
+ -- /:id
 - /courses
-	- /all
-  - /dashboard ?
-	- /:id
-    - /:videos/:id
-
-	
+ -- /all
+ -- /dashboard ?
+ -- /:id
+    -- /:videos/:id
