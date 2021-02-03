@@ -350,6 +350,8 @@ const checkDirectoryPro = (directory) => {
 
 let encodeFfmpegTorrent = async (file, courseId) => {
   const videoIndex = file.name.split(".")[0];
+  console.log("file path - ", file.path);
+  console.log("file path stringified - ", JSON.stringify(file.path));
   const sectionIndex = JSON.stringify(file.path).split("//")[2].split(".")[0];
 
   try {
