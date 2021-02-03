@@ -63,7 +63,7 @@ class AdminCourseDetail extends Component {
         });
     };
     apiCall();
-    window.open("http://beta.courses.swciitg.in/api/admin/courses");
+    window.open("https://beta.courses.swciitg.in/api/admin/courses");
   };
   handleSubmit = (e) => {
     e.preventDefault();

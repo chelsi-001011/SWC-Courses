@@ -37,7 +37,7 @@ mongoose
   .catch((err) => console.error("DB connection fail"));
 
 var corsOptions = {
-  origin: "http://beta.courses.swciitg.in",
+  origin: "https://beta.courses.swciitg.in",
   //origin: "*",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,

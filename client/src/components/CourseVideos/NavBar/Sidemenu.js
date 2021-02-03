@@ -30,7 +30,7 @@ export default function Sidemenu() {
   const [state, setState] = React.useState({ left: false });
 
   const logoutHandler = () => {
-    window.open("http://beta.courses.swciitg.in/auth/logout", "_self");
+    window.open("https://beta.courses.swciitg.in/auth/logout", "_self");
   };
 
   const toggleDrawer = (anchor, open) => (event) => {

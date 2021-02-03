@@ -7,7 +7,7 @@ const OutlookLogin = (props) => {
   const { isLoggedIn, setisLoggedIn } = useContext(AuthContext);
 
   const onSubmit = (e) => {
-    window.open("http://beta.courses.swciitg.in/auth/outlook", "_self");
+    window.open("https://beta.courses.swciitg.in/auth/outlook", "_self");
   };
 
   return (

@@ -21,7 +21,7 @@ passport.use(
     {
       clientID: OUTLOOK_CLIENT_ID,
       clientSecret: OUTLOOK_CLIENT_SECRET,
-      callbackURL: "http://beta.courses.swciitg.in/auth/outlook/callback",
+      callbackURL: "https://beta.courses.swciitg.in/auth/outlook/callback",
       passReqToCallback: true,
     },
     function (req, accessToken, refreshToken, profile, done) {
