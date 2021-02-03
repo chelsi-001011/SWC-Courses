@@ -57,7 +57,7 @@ app.use((req, res, next) => {
 });
 app.use(cookieParser());
 app.use(express.json());
-app.use("public2", express.static(__dirname + "/assets"));
+app.use(express.static(__dirname + "/assets"));
 app.use(flash());
 
 // SESSION MIDDLEWARE
