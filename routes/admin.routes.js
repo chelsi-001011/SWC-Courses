@@ -1,6 +1,7 @@
 let express = require("express");
 let router = express.Router();
 let adminController = require("../controllers/admin.controller");
+let adminController2 = require("../controllers/admin.controller2");
 let User = require("../models/user");
 
 router.use("/", adminController.isAdminController);
@@ -30,11 +31,20 @@ router.get("/courses/:id", adminController.getOneCourse);
 router.post("/courses/:id/videos", adminController.uploadVideo);
 
 //add full course via torrent
-router.post(
+/*router.post(
   "/torrentUpload",
   adminController.thumbnailImageUpload,
   adminController.downloadAllTorrentFiles
+);*/
+
+//this is for testing the new admin
+
+router.post(
+  "/torrentUpload",
+  adminController2.thumbnailImageUpload,
+  adminController2.downloadAllTorrentFiles
 );
+
 /* ############## GIVE OR DELETE ADMIN ACCESS ################# */
 
 //1. MAKE SOMEONE ADMIN

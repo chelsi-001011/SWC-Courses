@@ -14,8 +14,8 @@ const { dir } = require("console");
 const { exec } = require("child_process");
 const { title } = require("process");
 const { resolve } = require("path");
+const course = require("../models/course");
 
-let client = new WebTorrent();
 ffmpeg.setFfmpegPath(pathToFfmpeg);
 ffmpeg.setFfprobePath(ffprobe.path);
 //multer code
@@ -348,6 +348,48 @@ const checkDirectoryPro = (directory) => {
   });
 };
 
+const torrentDownloadPro = (file, length, courseId) => {
+  return new Promise((resolve, reject) => {
+    const source = file.createReadStream();
+    const destination = fs.createWriteStream(
+      path.join(dirname.dirpath, "/assets/videos/", file.path)
+    );
+
+    destination.on("open", () => {
+      source
+        .on("end", async () => {
+          console.log("file:\t\t", file.name, " downloaded");
+          // destroy torrent after all files are saved
+          length -= 1;
+          console.log("download remining = " + length);
+          if (!length) {
+            videoTorrent.destroy(() => {
+              console.log("torrent is successfully destroyed");
+            });
+          }
+          //now start encoding
+          try {
+            await encodeFfmpegTorrent(file, courseId);
+            resolve(
+              `Video ${
+                this.current + 1
+              } is encoded successfully, raw file deleted`
+            );
+            console.log(
+              `Video ${
+                this.current + 1
+              } is encoded successfully, raw file deleted`
+            );
+          } catch (err) {
+            reject(err);
+            console.log(err);
+          }
+        })
+        .pipe(destination);
+    });
+  });
+};
+
 let encodeFfmpegTorrent = async (file, courseId) => {
   const videoIndex = file.name.split(".")[0];
   console.log("file path - ", file.path);
@@ -558,6 +600,7 @@ exports.downloadAllTorrentFiles = async (req, res) => {
   try {
     await newCourse.save();
   } catch (error) {
+    console.log(error);
     return res.status(409).json({
       msg: "This course is already exist",
     });
@@ -569,66 +612,69 @@ exports.downloadAllTorrentFiles = async (req, res) => {
   });
 
   //start the downloading and encoding procedure
-  let client = new WebTorrent();
+  const client = new WebTorrent();
   const torrentUrl = req.body.magnet;
 
-  let videoTorrent = client.add(
+  const videoTorrent = client.add(
     torrentUrl,
-    { announce: ["wss://tracker.openwebtorrent.com"] },
+    {
+      announce: ["wss://tracker.openwebtorrent.com"],
+    },
     (torrent) => {
-      // Stream each file to the disk
-      const files = torrent.files;
-      let length = files.length;
-      files.forEach(async (file) => {
-        try {
-          if (file.name.endsWith(".mp4") || file.name.endsWith(".mkv")) {
-            // setInterval(() => {
-            //   console.log("File progress", file.progress);
-            // }, 3000);
-            let directory = path.join(
-              dirname.dirpath,
-              "/assets/videos/",
-              file.path.replace(file.name, "")
-            );
-            try {
-              let dirmsg = await checkDirectoryPro(directory);
-              console.log(dirmsg);
-            } catch (err) {
-              console.log(err);
-            }
-            const source = file.createReadStream();
-            const destination = fs.createWriteStream(
-              path.join(dirname.dirpath, "/assets/videos/", file.path)
-            );
-
-            destination.on("open", () => {
-              source
-                .on("end", async () => {
-                  console.log("file:\t\t", file.name);
-                  // destroy torrent after all files are saved
-                  length -= 1;
-                  console.log("download remining = " + length);
-                  if (!length) {
-                    torrent.destroy(() => {
-                      console.log("torrent is successfully destroyed");
-                    });
-                  }
-                  //now start encoding
-                  try {
-                    await encodeFfmpegTorrent(file, courseId);
-                  } catch (err) {
-                    console.log(err);
-                  }
-                })
-                .pipe(destination);
-            });
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      });
+      console.log("torrent added successfully");
+      torrent.deselect(0, torrent.pieces.length - 1, false);
     }
   );
+  // Stream each file to the disk
+  videoTorrent.on("ready", async () => {
+    const files = videoTorrent.files;
+    let range = {
+      from: 0,
+      to: files.length,
+      files: files,
+
+      [Symbol.asyncIterator]() {
+        return {
+          current: this.from,
+          last: this.to,
+          // last: 8,
+          files: this.files,
+
+          async next() {
+            let file = this.files[this.current];
+            let length = this.files.length;
+
+            if (file.name.endsWith(".mp4") || file.name.endsWith(".mkv")) {
+              let directory = path.join(
+                dirname.dirpath,
+                "/assets/videos/",
+                file.path.replace(file.name, "")
+              );
+
+              let dirmsg = await checkDirectoryPro(directory);
+
+              console.log({ msg: dirmsg, videoNO: this.current - 1 });
+
+              let torrentmsg = await torrentDownloadPro(file, length, courseId);
+              console.log("message from torrent - ", torrentmsg);
+            }
+
+            if (this.current < this.last - 1) {
+              return { done: false, value: this.current++ };
+            } else {
+              return { done: true };
+            }
+          },
+        };
+      },
+    };
+
+    for await (let value of range) {
+      // (4)
+      console.log("I'm from for await loop - ", value);
+    }
+  });
+
   videoTorrent.on("error", (err) => {
     if (err) {
       console.log("torrent error-");

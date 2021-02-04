@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <style>
+      body {
+        background-color: rgb(78, 78, 78);
+        font-size: 2em;
+      }
+      .container{
+        display: flex;
+        justify-content: center;
+      }
+      h1{
+          text-align: center;
+      }
+    </style>
+    <title>Node File Uploads</title>
+  </head>
+  <body>
+   
+      <h1>File Upload</h1>
+       <div class="container">
+      <form
+        action="http://localhost:8080/api/admin/torrentUpload"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <div class="file-field input-field">
+          <div class="btn grey">
+            <span>File</span>
+            <input name="image" type="file" /></br>
+            <input type="text" name="magnet" placeholder="magnet" /></br>
+            <input type="text" name="title" placeholder="title" /></br>
+            <input type="text" name="description" placeholder="description" /></br>
+            <input type="text" name="author" placeholder="author" /></br>
+          </div>
+        </div>
+        <button type="submit" class="btn">Submit</button>
+      </form>
+    </div>
+  </body>
+</html>
