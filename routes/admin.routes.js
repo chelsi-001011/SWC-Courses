@@ -4,7 +4,7 @@ let adminController = require("../controllers/admin.controller");
 let adminController2 = require("../controllers/admin.controller2");
 let User = require("../models/user");
 
-router.use("/", adminController.isAdminController);
+//router.use("/", adminController.isAdminController);
 
 //home page route for admin
 router.get("/", function (req, res) {
