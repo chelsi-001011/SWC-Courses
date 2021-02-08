@@ -1,11 +1,17 @@
 .Nav {
   font-family: "Rubik", sans-serif;
+  /* background-color: white; */
 }
 
 .NavLink {
   font-weight: 500;
   color: #000000;
   margin-right: 1rem;
+}
+
+.NavLink:hover {
+  color: #000000;
+  text-decoration: none;
 }
 
 .SearchForm {
@@ -39,9 +45,4 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.NavLink:hover {
-  color: #000000;
-  text-decoration: none;
 }

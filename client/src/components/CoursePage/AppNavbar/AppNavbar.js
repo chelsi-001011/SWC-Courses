@@ -8,7 +8,7 @@ import Avatar from "@material-ui/core/Avatar";
 
 class AppNavbar extends Component {
   logoutHandler = () => {
-    window.open("https://beta.courses.swciitg.in/auth/logout", "_self");
+    window.open("http://localhost:5000/auth/logout", "_self");
   };
 
   submitHandler = (e) => {

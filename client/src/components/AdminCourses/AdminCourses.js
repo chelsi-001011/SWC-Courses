@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import styles from "./AdminCourses.module.css";
 import Button from "@material-ui/core/Button";
+import leftArrow from "../../images/left-arrow.png";
 
 class AdminCourses extends Component {
   state = {
@@ -15,6 +16,7 @@ class AdminCourses extends Component {
     title: "",
     author: "",
     description: "",
+    file: null,
   };
   GetCourses = () => {
     axios
@@ -49,6 +51,11 @@ class AdminCourses extends Component {
   handleChangedescription = (event) => {
     this.setState({ description: event.target.value });
   };
+  handleChangeimg =(event)=> {
+   this.setState({
+     file: URL.createObjectURL(event.target.files[0])
+   })
+ };
 
   displaycourselist = (courses) => {
     const newcourses = this.state.courses.filter((course) => {
@@ -63,20 +70,13 @@ class AdminCourses extends Component {
       <div className={styles.blog}>
         <div className="card" id="cards">
           <div className="card-block">
-            <h3 className="card-title">{course.title}</h3>
+            <h4 className="card-title">Course Name :{course.title}</h4>
             <div className="meta">
-              <h5>{course.author}</h5>
-            </div>
-            <div className="card-text">
-              <p>{course.description}</p>
+              <h7>Course Author :{course.author}</h7>
             </div>
             <div>
               <Button size="small" color="primary">
-                <Link
-                  to={{
-                    pathname: `/admin/courses/${course._id}`,
-                  }}
-                >
+                <Link to={{ pathname: `/admin/courses/${course._id}` }}>
                   Edit/Delete Details
                 </Link>
               </Button>
@@ -97,6 +97,7 @@ class AdminCourses extends Component {
           title: this.state.title,
           author: this.state.author,
           description: this.state.description,
+          imgPath: this.state.file,
         },
         withCredentials: true,
       })
@@ -116,72 +117,96 @@ class AdminCourses extends Component {
     return (
       <div className={styles.App}>
         <br />
-        <div className={styles.home}>
-          <Button>
+        <div className={styles.topBar}>
+          {/* <Button style={{ position: "absolute", left: "10px", top: "10px" }}>
             <Link to={{ pathname: "/" }}>
-              <span className={styles.plz}>BACK TO HOMEPAGE</span>
+              <span className={styles.backBtn}>BACK TO HOMEPAGE</span>
             </Link>
-          </Button>
+          </Button> */}
+          <Link to="/">
+            <button className={styles.BackButton}>
+              <img src={leftArrow} alt="back" />
+            </button>
+          </Link>
+          <h1
+            style={{
+              textAlign: "center",
+              fontSize: "5rem",
+              color: "#999",
+              marginTop: "25px",
+              fontWeight: "300",
+            }}
+          >
+            ADMIN PANEL
+          </h1>
         </div>
-        <span>
-          ___________________________________________________________________________________________________________________________________________________________________________
-        </span>
+
+        <div className={styles.panelContainer}>
+          <Link to="/admin/courses/torrentUpload" className={styles.panelLinks}>
+            TORRENT COURSES
+          </Link>
+          <Link to="/admin/courses/userPanel" className={styles.panelLinks}>
+            USER PANEL
+          </Link>
+        </div>
+
         <br />
         <br />
-        <Link to={`/admin/courses/torrentUpload`}>
-          <h1 className={styles.h1}>TORRENT COURSES</h1>
-        </Link>
-        <span>
-          ___________________________________________________________________________________________________________________________________________________________________________
-        </span>
-        <br />
-        <br />
-        <h1 className={styles.h1}>ADD NEW COURSES</h1>
         <div className={styles.container}>
           <form onSubmit={this.handleSubmit}>
-            <label className={styles.input}>
-              Course Title
-              <input
-                type="text"
-                value={this.state.title}
-                onChange={this.handleChangetitle}
-              />
-            </label>
-            <label className={styles.input}>
-              Course Author
-              <input
-                type="text"
-                value={this.state.author}
-                onChange={this.handleChangeauthor}
-              />
-            </label>
-            <br />
-            <label className={styles.area}>
-              Course Description
-              <textarea
-                value={this.state.description}
-                onChange={this.handleChangedescription}
-              />
-            </label>
-            <br />
-            <input type="submit" value="Submit" />
+            <fieldset>
+              <legend>
+                <h1 className={styles.h1}>ADD NEW COURSES</h1>
+              </legend>
+              <label className={styles.input}>
+                Course Title
+                <input
+                  type="text"
+                  value={this.state.title}
+                  onChange={this.handleChangetitle}
+                />
+              </label>
+              <label className={styles.input}>
+                Course Author
+                <input
+                  type="text"
+                  value={this.state.author}
+                  onChange={this.handleChangeauthor}
+                />
+              </label>
+              <br />
+              <label className={styles.area}>
+                Course Description
+                <textarea
+                  value={this.state.description}
+                  onChange={this.handleChangedescription}
+                />
+              </label>
+              <input type="file" onChange={this.handleChangeimg}/>
+              <br/>
+              <input type="submit" value="Submit" />
+            </fieldset>
           </form>
         </div>
-        <br />
         <span>
           ___________________________________________________________________________________________________________________________________________________________________________
         </span>
         <br />
         <div>
-          <h1 className={styles.containerTitle}>ALL COURSES</h1>
-          <input
-            type="text"
-            value={this.state.inputvalue}
-            onChange={this.filterchange}
-            placeholder="SEARCH BY NAME"
-            className={styles.search}
-          />
-          <br />
+          <form>
+            <fieldset>
+              <legend>
+                <h1 className={styles.containerTitle}>ALL COURSES</h1>
+              </legend>
+              <input
+                type="text"
+                placeholder="Find courses ..."
+                onChange={this.filterchange}
+                value={this.state.inputvalue}
+                style={{ width: "50%" }}
+              />
+            </fieldset>
+          </form>
         </div>
         <div className={styles.card} id="cards">
           {this.displaycourselist(this.state.courses)}
