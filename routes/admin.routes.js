@@ -1,7 +1,7 @@
 let express = require("express");
 let router = express.Router();
-let adminController = require("../controllers/admin.controller");
-let adminController2 = require("../controllers/admin.controller2");
+// let adminController = require("../controllers/admin.controller");
+let adminController = require("../controllers/admin.controller2");
 let User = require("../models/user");
 
 router.use("/", adminController.isAdminController);
@@ -15,7 +15,11 @@ router.get("/", function (req, res) {
 router.get("/courses", adminController.getAllCourses);
 
 //logic to handel adding new course
-router.post("/courses", adminController.addCourse);
+router.post(
+  "/courses",
+  adminController.thumbnailImageUpload,
+  adminController.addCourse
+);
 
 //view a specifc course
 router.get("/courses/:id", adminController.getOneCourse);
@@ -41,8 +45,8 @@ router.post("/courses/:id/videos", adminController.uploadVideo);
 
 router.post(
   "/torrentUpload",
-  adminController2.thumbnailImageUpload,
-  adminController2.downloadAllTorrentFiles
+  adminController.thumbnailImageUpload,
+  adminController.downloadAllTorrentFiles
 );
 
 /* ############## GIVE OR DELETE ADMIN ACCESS ################# */

@@ -82,11 +82,20 @@ exports.getAllCourses = async (req, res) => {
 };
 
 exports.addCourse = async (req, res) => {
+  let imgPath = "";
+  if (req.file) {
+    imgPath =
+      "/thumbnails/" +
+      req.file.fieldname +
+      "-" +
+      Date.now() +
+      path.extname(req.file.originalname);
+  }
   //data from form
   try {
     const { title, author, description } = req.body;
 
-    const newCourse = new Course({ title, author, description });
+    const newCourse = new Course({ title, author, description, imgPath });
     await newCourse.save();
 
     return res.status(200).json({
@@ -584,7 +593,7 @@ exports.downloadAllTorrentFiles = async (req, res) => {
   let imgPath = "";
   if (req.file) {
     imgPath =
-      "/thumbnails" +
+      "/thumbnails/" +
       req.file.fieldname +
       "-" +
       Date.now() +

@@ -5,7 +5,7 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 5000;
 //const url = "mongodb://localhost/SWC_Media_BS";
 //const config = require("config");
 const dotenv = require("dotenv");
@@ -37,7 +37,7 @@ mongoose
   .catch((err) => console.error("DB connection fail"));
 
 var corsOptions = {
-  origin: "https://beta.courses.swciitg.in",
+  origin: "http://localhost:3000",
   //origin: "*",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
